@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Adrián · Oficina SOC</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Oficina virtual de Adrián: crea tu avatar y deja que su guía te presente el CV.">
+<meta name="theme-color" content="#05070d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2305070d'/%3E%3Cpath d='M8 11l6 5-6 5' stroke='%2300ff9c' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='16' y='20' width='9' height='3' rx='1.5' fill='%2300e5ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="game">
+
+<header class="gbar">
+  <a class="gback" href="index.html">← Web</a>
+  <div class="gtitle"><span class="gdot"></span>ADRIÁN <span class="sep">//</span> OFICINA SOC</div>
+  <div class="gtools">
+    <span class="gcount" id="hudZonas" title="Zonas exploradas">🧭 0/8</span>
+    <button class="gbtn" id="btnAvatar" type="button">🎨 <span>Avatar</span></button>
+    <button class="gbtn gbtn-hot" id="btnTour" type="button">▶ <span>Tour guiado</span></button>
+    <button class="gbtn" id="btnVoz" type="button" aria-pressed="false" title="Activar la voz del guía">🔇</button>
+  </div>
+</header>
+
+<main class="stage">
+  <div class="screen">
+    <canvas id="world" tabindex="0" aria-label="Oficina virtual. Muévete con flechas o WASD, pulsa E para interactuar o haz clic en el suelo para caminar."></canvas>
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+    <section class="dlg" id="dlg" hidden aria-live="polite">
+      <div class="dlg-face"><canvas id="face"></canvas><span class="dlg-name">ADRIÁN CALDERÓN</span></div>
+      <div class="dlg-bubble">
+        <div class="dlg-top"><span>ADRIÁN CALDERÓN · GUÍA</span><span class="dlg-step" id="dlgStep"></span></div>
+        <p class="dlg-text" id="dlgText" title="Clic para mostrar todo el texto"></p>
+        <div class="dlg-actions" id="dlgActions"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="strip" id="strip">
+    <div>
+      <div class="strip-cmd" id="stripCmd"><b>reclutador@adrian-soc</b>:~$ ls</div>
+      <div class="strip-title" id="stripTitle">Explora la oficina</div>
+      <div class="strip-text" id="stripText">Acércate a una zona o habla con Adrián Calderón para empezar.</div>
+    </div>
+    <button class="btn btn-primary" id="stripBtn" type="button" hidden>Abrir · E</button>
+  </div>
+
+  <div class="pad" id="pad" aria-label="Controles táctiles">
+    <button class="p-up" data-k="up" type="button" aria-label="Arriba">▲</button>
+    <button class="p-left" data-k="left" type="button" aria-label="Izquierda">◀</button>
+    <button class="p-down" data-k="down" type="button" aria-label="Abajo">▼</button>
+    <button class="p-right" data-k="right" type="button" aria-label="Derecha">▶</button>
+    <button class="p-act" id="padAct" type="button" aria-label="Interactuar">E</button>
+  </div>
+  <p class="hint"><kbd>←↑↓→</kbd> o <kbd>WASD</kbd> para moverte · <kbd>E</kbd> para interactuar · clic en el suelo para caminar · <kbd>Esc</kbd> cierra ventanas</p>
+</main>
+
+<!-- ventana de zona -->
+<div class="modal" id="modal" hidden>
+  <div class="mbox" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <header class="mhead">
+      <div><span class="mkicker" id="mKicker"></span><h2 id="mTitle"></h2></div>
+      <button class="mx" type="button" data-close aria-label="Cerrar">✕</button>
+    </header>
+    <div class="mbody" id="mBody"></div>
+  </div>
+</div>
+
+<!-- creador de avatar -->
+<div class="modal" id="creator" hidden>
+  <div class="mbox mbox-wide" role="dialog" aria-modal="true" aria-labelledby="crTitle">
+    <header class="mhead">
+      <div><span class="mkicker">nano avatar.cfg</span><h2 id="crTitle">Crea tu avatar</h2></div>
+      <button class="mx" type="button" data-close aria-label="Cerrar">✕</button>
+    </header>
+    <div class="cr">
+      <div class="cr-prev">
+        <canvas id="crFace"></canvas>
+        <canvas id="crSprite"></canvas>
+        <div class="cr-prevbtns">
+          <button class="btn btn-sm" id="crRand" type="button">🎲 Aleatorio</button>
+          <button class="btn btn-sm btn-ghost" id="crCopy" type="button">📋 Copiar código</button>
+        </div>
+      </div>
+      <div class="cr-opts" id="crOpts"></div>
+    </div>
+    <footer class="mfoot"><button class="btn btn-primary" id="crOk" type="button">✅ Guardar y entrar</button></footer>
+  </div>
+</div>
+
+<!-- terminal -->
+<div class="modal" id="term" hidden>
+  <div class="mbox term" role="dialog" aria-modal="true" aria-label="Terminal">
+    <header class="term-bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><span class="term-title">reclutador@adrian-soc: ~</span><button class="mx" type="button" data-close aria-label="Cerrar">✕</button></header>
+    <div class="term-out" id="termOut" role="log"></div>
+    <form class="term-in" id="termForm" autocomplete="off"><label for="termInput">reclutador@adrian-soc:~$</label><input id="termInput" name="cmd" autocapitalize="off" spellcheck="false" enterkeyhint="send"></form>
+  </div>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/avatar.js"></script>
+<script src="assets/ui.js"></script>
+<script src="assets/juego.js"></script>
+</body>
+</html>

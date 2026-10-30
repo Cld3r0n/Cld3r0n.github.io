@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Adrián · Portfolio de ciberseguridad</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Portfolio de ciberseguridad de Adrián: home lab fortificado, Hack The Box, automatización y una oficina virtual para explorar su CV.">
+<meta property="og:title" content="Adrián · Portfolio de ciberseguridad">
+<meta property="og:description" content="Home lab fortificado, Hack The Box, automatización… y una oficina virtual donde su avatar te presenta el CV.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#05070d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2305070d'/%3E%3Cpath d='M8 11l6 5-6 5' stroke='%2300ff9c' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='16' y='20' width='9' height='3' rx='1.5' fill='%2300e5ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="web">
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Inicio"><b>adrian</b>@sec:~$<i></i></a>
+    <ul class="nav-links">
+      <li><a href="#sobre-mi">whoami</a></li>
+      <li><a href="#proyectos">proyectos</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#formacion">formación</a></li>
+      <li><a href="#contacto">contacto</a></li>
+    </ul>
+    <a class="btn btn-sm btn-primary" href="juego.html">🎮 <span>Modo oficina</span></a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="hero-text">
+      <p class="status"><span class="dot"></span><span id="estado"></span></p>
+      <h1>Hola, soy <span class="hl" id="nombre">Adrián</span>.</h1>
+      <p class="rol" id="rol"></p>
+      <p class="claim" id="claim"></p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="juego.html">🎮 Entrar en la oficina virtual</a>
+        <a class="btn" id="cvBtn" href="assets/cv.pdf" target="_blank" rel="noopener">📄 Ver CV en PDF</a>
+        <a class="btn btn-ghost" href="#contacto">✉️ Contacto</a>
+      </div>
+    </div>
+    <figure class="hero-avatar">
+      <div class="speech" id="heroSpeech" aria-live="polite"></div>
+      <canvas id="heroFace" aria-label="Avatar animado de Adrián"></canvas>
+      <figcaption>Adrián Calderón · guía oficial</figcaption>
+    </figure>
+  </section>
+
+  <section class="stats wrap" id="stats" aria-label="Datos destacados"></section>
+
+  <section id="sobre-mi" class="sec wrap">
+    <div class="sec-head"><div><span class="kicker">whoami</span><h2>Sobre mí</h2></div></div>
+    <div id="sobreMi"></div>
+  </section>
+
+  <section id="proyectos" class="sec wrap">
+    <div class="sec-head">
+      <div><span class="kicker">ls ~/proyectos</span><h2>Proyectos</h2></div>
+      <div class="filters" id="filters" role="group" aria-label="Filtrar proyectos"></div>
+    </div>
+    <div class="grid-projects" id="gridProjects"></div>
+  </section>
+
+  <section id="skills" class="sec wrap">
+    <div class="sec-head"><div><span class="kicker">cat skills.txt</span><h2>Skills</h2></div></div>
+    <div id="skillsBox"></div>
+  </section>
+
+  <section id="formacion" class="sec wrap">
+    <div class="sec-head"><div><span class="kicker">history --formacion</span><h2>Formación y experiencia</h2></div></div>
+    <div id="formacionBox"></div>
+  </section>
+
+  <section id="contacto" class="sec wrap">
+    <div class="sec-head"><div><span class="kicker">ping adrian</span><h2>Contacto</h2></div></div>
+    <div id="contactoBox"></div>
+    <div class="game-cta">
+      <div>
+        <h2>🎮 ¿Prefieres verlo jugando?</h2>
+        <p>Crea tu avatar, entra en mi oficina SOC y deja que mi avatar te presente el CV zona por zona. Incluye una terminal con algún secreto.</p>
+      </div>
+      <a class="btn btn-primary" href="juego.html">Entrar en la oficina →</a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span id="copy">© Adrián</span>
+    <span>Hecho a mano con HTML, CSS y JavaScript · sin frameworks · alojado en GitHub Pages</span>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/avatar.js"></script>
+<script src="assets/ui.js"></script>
+<script src="assets/web.js"></script>
+</body>
+</html>
